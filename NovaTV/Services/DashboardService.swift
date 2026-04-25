@@ -66,4 +66,16 @@ final class DashboardService: ObservableObject {
         webSocketTask = nil
         isConnected = false
     }
+
+    var baseURL: String { "http://\(dashboardHost):\(dashboardPort)" }
+
+    func fetchDetail(service: String) async -> [String: Any]? {
+        guard let url = URL(string: "\(baseURL)/api/detail/\(service)") else { return nil }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        } catch {
+            return nil
+        }
+    }
 }

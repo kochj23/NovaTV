@@ -1,5 +1,18 @@
 import SwiftUI
 
+struct DetailLink<Content: View>: View {
+    let title: String
+    let service: String
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        NavigationLink(destination: DetailView(title: title, service: service)) {
+            content
+        }
+        .buttonStyle(.card)
+    }
+}
+
 struct DashboardView: View {
     @EnvironmentObject var dashboard: DashboardService
 
@@ -73,17 +86,17 @@ struct DashboardView: View {
             GridItem(.flexible(), spacing: 20),
             GridItem(.flexible(), spacing: 20),
         ], spacing: 20) {
-            SystemCard(state: dashboard.state?.system)
-            GatewayCard(state: dashboard.state?.gateway)
-            SchedulerCard(state: dashboard.state?.scheduler)
-            OllamaCard(state: dashboard.state?.ollama)
-            PostgresCard(state: dashboard.state?.postgresql)
-            RedisCard(state: dashboard.state?.redis)
-            TaskHistoryCard(state: dashboard.state?.taskHistory)
-            ModelUsageCard(state: dashboard.state?.modelUsage)
-            ConversationsCard(state: dashboard.state?.conversations)
-            UnifiCard(state: dashboard.state?.unifi)
-            ServicesCard(services: dashboard.state?.services)
+            DetailLink(title: "System Resources", service: "system") { SystemCard(state: dashboard.state?.system) }
+            DetailLink(title: "Gateway", service: "gateway") { GatewayCard(state: dashboard.state?.gateway) }
+            DetailLink(title: "Scheduler", service: "scheduler") { SchedulerCard(state: dashboard.state?.scheduler) }
+            DetailLink(title: "Ollama Models", service: "ollama") { OllamaCard(state: dashboard.state?.ollama) }
+            DetailLink(title: "PostgreSQL", service: "postgresql") { PostgresCard(state: dashboard.state?.postgresql) }
+            DetailLink(title: "Redis", service: "redis") { RedisCard(state: dashboard.state?.redis) }
+            DetailLink(title: "Task History", service: "task_history") { TaskHistoryCard(state: dashboard.state?.taskHistory) }
+            DetailLink(title: "Model Usage", service: "model_usage") { ModelUsageCard(state: dashboard.state?.modelUsage) }
+            DetailLink(title: "Conversations", service: "conversations") { ConversationsCard(state: dashboard.state?.conversations) }
+            DetailLink(title: "UniFi Network", service: "unifi") { UnifiCard(state: dashboard.state?.unifi) }
+            DetailLink(title: "Services", service: "ollama") { ServicesCard(services: dashboard.state?.services) }
         }
         .padding(.bottom, 20)
     }
@@ -102,7 +115,9 @@ struct DashboardView: View {
             ], spacing: 20) {
                 if let agents = dashboard.state?.agents {
                     ForEach(Array(agents.sorted(by: { $0.key < $1.key })), id: \.key) { name, agent in
-                        AgentCard(name: name, state: agent)
+                        DetailLink(title: "Agent: \(name.capitalized)", service: "agent-\(name)") {
+                            AgentCard(name: name, state: agent)
+                        }
                     }
                 }
             }

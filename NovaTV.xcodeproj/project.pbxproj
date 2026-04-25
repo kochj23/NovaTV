@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D03076C7282B31B5D3BA57C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA7C1A838850D615AE58AA7 /* DetailView.swift */; };
 		586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1E0FE4555130401B471D0 /* DashboardView.swift */; };
 		636073B18E14278E88672D88 /* DashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E725392E5CFD96D2DC037C9A /* DashboardService.swift */; };
 		7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C627E70C65C311DB1DD7B /* DashboardState.swift */; };
@@ -18,6 +19,7 @@
 		12A1E0FE4555130401B471D0 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		2CEDA995F61F568F5C38008E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		676A2019711ED8CE2B752A6D /* NovaTV.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NovaTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FA7C1A838850D615AE58AA7 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTVApp.swift; sourceTree = "<group>"; };
 		E725392E5CFD96D2DC037C9A /* DashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardService.swift; sourceTree = "<group>"; };
 		ED4C627E70C65C311DB1DD7B /* DashboardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardState.swift; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 			isa = PBXGroup;
 			children = (
 				12A1E0FE4555130401B471D0 /* DashboardView.swift */,
+				8FA7C1A838850D615AE58AA7 /* DetailView.swift */,
 				EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */,
 			);
 			path = Views;
@@ -139,6 +142,7 @@
 				636073B18E14278E88672D88 /* DashboardService.swift in Sources */,
 				7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */,
 				586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */,
+				1D03076C7282B31B5D3BA57C /* DetailView.swift in Sources */,
 				E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */,
 				AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */,
 			);
