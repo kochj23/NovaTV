@@ -1,0 +1,25 @@
+name: NovaTV
+options:
+  bundleIdPrefix: net.digitalnoise
+  deploymentTarget:
+    tvOS: "17.0"
+  xcodeVersion: "16.0"
+settings:
+  base:
+    DEVELOPMENT_TEAM: ""
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  NovaTV:
+    type: application
+    platform: tvOS
+    sources:
+      - path: NovaTV
+        excludes:
+          - "Assets.xcassets"
+    settings:
+      base:
+        INFOPLIST_FILE: NovaTV/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: net.digitalnoise.NovaTV
+        ASSETCATALOG_COMPILER_APPICON_NAME: ""

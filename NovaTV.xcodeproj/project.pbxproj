@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1E0FE4555130401B471D0 /* DashboardView.swift */; };
+		636073B18E14278E88672D88 /* DashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E725392E5CFD96D2DC037C9A /* DashboardService.swift */; };
+		7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C627E70C65C311DB1DD7B /* DashboardState.swift */; };
+		AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */; };
+		E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		12A1E0FE4555130401B471D0 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		2CEDA995F61F568F5C38008E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		676A2019711ED8CE2B752A6D /* NovaTV.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NovaTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTVApp.swift; sourceTree = "<group>"; };
+		E725392E5CFD96D2DC037C9A /* DashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardService.swift; sourceTree = "<group>"; };
+		ED4C627E70C65C311DB1DD7B /* DashboardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardState.swift; sourceTree = "<group>"; };
+		EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCards.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4B1E6C7A90F1A20FCA50C1A7 /* NovaTV */ = {
+			isa = PBXGroup;
+			children = (
+				2CEDA995F61F568F5C38008E /* Info.plist */,
+				DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */,
+				C4BA16848521065B8BC25C57 /* Models */,
+				5A417C3474EC0BB683AB4C47 /* Services */,
+				87887926C3AC001F80149EF0 /* Views */,
+			);
+			path = NovaTV;
+			sourceTree = "<group>";
+		};
+		5A417C3474EC0BB683AB4C47 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E725392E5CFD96D2DC037C9A /* DashboardService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		87887926C3AC001F80149EF0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				12A1E0FE4555130401B471D0 /* DashboardView.swift */,
+				EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		910C1F0171F15E6A0B1DA6CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				676A2019711ED8CE2B752A6D /* NovaTV.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4BA16848521065B8BC25C57 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ED4C627E70C65C311DB1DD7B /* DashboardState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FF54FD7FDF39E91DE47D35B2 = {
+			isa = PBXGroup;
+			children = (
+				4B1E6C7A90F1A20FCA50C1A7 /* NovaTV */,
+				910C1F0171F15E6A0B1DA6CC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E4105C50C250EE05B5817529 /* NovaTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD969D877441EEE8D8DBC564 /* Build configuration list for PBXNativeTarget "NovaTV" */;
+			buildPhases = (
+				D15D7254B99F59398A8F371D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NovaTV;
+			packageProductDependencies = (
+			);
+			productName = NovaTV;
+			productReference = 676A2019711ED8CE2B752A6D /* NovaTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6C81B2A14A3A08D3D700B834 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					E4105C50C250EE05B5817529 = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = 3DA7530F5C8C547799232B52 /* Build configuration list for PBXProject "NovaTV" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FF54FD7FDF39E91DE47D35B2;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 910C1F0171F15E6A0B1DA6CC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E4105C50C250EE05B5817529 /* NovaTV */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D15D7254B99F59398A8F371D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				636073B18E14278E88672D88 /* DashboardService.swift in Sources */,
+				7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */,
+				586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */,
+				E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */,
+				AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		16E3F8318E203ADD9EF62A55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = NovaTV/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.digitalnoise.NovaTV;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
+		3579B44B9D3B6415901223DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = NovaTV/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.digitalnoise.NovaTV;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		B9F525A2B291977513CA6087 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+			};
+			name = Release;
+		};
+		BC809875E14C303BF60F702F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3DA7530F5C8C547799232B52 /* Build configuration list for PBXProject "NovaTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC809875E14C303BF60F702F /* Debug */,
+				B9F525A2B291977513CA6087 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD969D877441EEE8D8DBC564 /* Build configuration list for PBXNativeTarget "NovaTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3579B44B9D3B6415901223DF /* Debug */,
+				16E3F8318E203ADD9EF62A55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6C81B2A14A3A08D3D700B834 /* Project object */;
+}
