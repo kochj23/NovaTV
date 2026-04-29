@@ -8,9 +8,13 @@ Written by Jordan Koch.
 ![tvOS](https://img.shields.io/badge/tvOS-17.0+-black?logo=apple)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
+## Screenshot
+
+![NovaTV HUD on Apple TV](docs/hud-appletv-screenshot.png)
+
 ## Overview
 
-NovaTV connects to the Nova Control dashboard via WebSocket and renders all infrastructure metrics in a native tvOS interface optimized for big-screen viewing. It receives the same real-time state updates as the web dashboard (every 2.5 seconds) and displays them in a focus-navigable card grid.
+NovaTV connects to the Nova Control dashboard via WebSocket and renders a full-screen sci-fi radial HUD visualization on Apple TV. All 13 subsystems orbit a central gateway node with real-time activity coloring, animated particle flows, and SF Symbol icons. It receives the same state updates as the web dashboard (every 2.5 seconds).
 
 ## Features
 
