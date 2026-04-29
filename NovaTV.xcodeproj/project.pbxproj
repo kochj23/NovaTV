@@ -10,6 +10,7 @@
 		1D03076C7282B31B5D3BA57C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA7C1A838850D615AE58AA7 /* DetailView.swift */; };
 		586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1E0FE4555130401B471D0 /* DashboardView.swift */; };
 		636073B18E14278E88672D88 /* DashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E725392E5CFD96D2DC037C9A /* DashboardService.swift */; };
+		72332A24ED8EDC4E364B33FB /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBBE87708194FF5055929C /* HUDView.swift */; };
 		7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C627E70C65C311DB1DD7B /* DashboardState.swift */; };
 		AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */; };
 		E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		12A1E0FE4555130401B471D0 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		1AFBBE87708194FF5055929C /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		2CEDA995F61F568F5C38008E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		676A2019711ED8CE2B752A6D /* NovaTV.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NovaTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FA7C1A838850D615AE58AA7 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 			children = (
 				12A1E0FE4555130401B471D0 /* DashboardView.swift */,
 				8FA7C1A838850D615AE58AA7 /* DetailView.swift */,
+				1AFBBE87708194FF5055929C /* HUDView.swift */,
 				EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */,
 			);
 			path = Views;
@@ -111,7 +114,8 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					E4105C50C250EE05B5817529 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = QRRCB8HB3W;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -143,6 +147,7 @@
 				7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */,
 				586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */,
 				1D03076C7282B31B5D3BA57C /* DetailView.swift in Sources */,
+				72332A24ED8EDC4E364B33FB /* HUDView.swift in Sources */,
 				E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */,
 				AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */,
 			);
@@ -216,10 +221,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = QRRCB8HB3W;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -275,10 +281,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = QRRCB8HB3W;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

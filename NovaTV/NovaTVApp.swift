@@ -6,7 +6,7 @@ struct NovaTVApp: App {
 
     var body: some Scene {
         WindowGroup {
-            DashboardView()
+            HUDView()
                 .environmentObject(dashboard)
                 .preferredColorScheme(.dark)
         }
