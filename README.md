@@ -6,7 +6,8 @@ Written by Jordan Koch.
 
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange?logo=swift)
 ![tvOS](https://img.shields.io/badge/tvOS-17.0+-black?logo=apple)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Tests](https://img.shields.io/badge/tests-27%20cases-brightgreen)
 
 ## Screenshot
 
@@ -37,15 +38,36 @@ NovaTV connects to the Nova Control dashboard via WebSocket and renders a full-s
 
 ## Architecture
 
-```
-Apple TV (SwiftUI)
-    ↕ WebSocket (ws://192.168.1.6:37450/ws)
-Nova Control Server (FastAPI, port 37450)
-    ↕ Polls 15 data sources every 2.5s
-Nova Infrastructure (Ollama, PostgreSQL, Redis, Scheduler, etc.)
+```mermaid
+graph TD
+    subgraph Apple TV
+        A[NovaTVApp] --> B[HUDView<br>Radial Sci-Fi Canvas]
+        A --> C[DashboardView<br>Grid Layout]
+        C --> D[13 StatusCards]
+        C --> E[Agent Cards]
+        C --> F[DetailView]
+        G[DashboardService] -->|WebSocket| H
+    end
+
+    H((ws://192.168.1.6:37450/ws))
+
+    subgraph Nova Infrastructure
+        I[Nova Control Server<br>FastAPI :37450] --> H
+        I -->|polls every 2.5s| J[Ollama :11434]
+        I --> K[PostgreSQL]
+        I --> L[Redis]
+        I --> M[Scheduler :37460]
+        I --> N[7 Backend Services]
+        I --> O[5 Nova Agents]
+        I --> P[UniFi UDM Pro]
+    end
+
+    style A fill:#0d1117,stroke:#00ffcc,color:#00ffcc
+    style B fill:#0d1117,stroke:#00ffcc,color:#00ffcc
+    style I fill:#0d1117,stroke:#00ffcc,color:#00ffcc
 ```
 
-The TV app is a pure consumer — it receives the same JSON state object as the web dashboard browser client. No separate API needed.
+The TV app is a pure consumer -- it receives the same JSON state object as the web dashboard browser client via WebSocket. No separate API needed.
 
 ## Requirements
 
@@ -112,6 +134,33 @@ All data comes from the Nova Control WebSocket push (same as web dashboard):
 | Services | HTTP probes | 7 services with latency |
 | Agents | Redis meta hashes | 5 agents with status/model/uptime |
 
+## Testing
+
+The test suite (`NovaTVTests`) validates all Codable dashboard state models, utility functions, and security. Run tests via Xcode or the command line:
+
+```bash
+xcodebuild test -scheme NovaTV -sdk appletvsimulator -destination 'platform=tvOS Simulator,name=Apple TV 4K (3rd generation)'
+```
+
+### Test Coverage
+
+| Category | Tests | What's Covered |
+|----------|-------|----------------|
+| **DashboardState** | 2 | Full JSON decoding (system, gateway, scheduler, ollama, redis, postgresql), minimal/empty state |
+| **System Models** | 4 | MemoryInfo, DiskInfo, SwapInfo, NetworkInfo decoding |
+| **Gateway** | 1 | Status, ok flag, WebSocket reachability |
+| **Scheduler** | 1 | SchedulerInfo with success rate calculation |
+| **Ollama/Services** | 2 | OllamaModel (VRAM, context length), ServiceState (latency) |
+| **Agents** | 1 | AgentState with model, tasks, uptime |
+| **Task/Usage/Conv** | 3 | TaskHistory all-time/24h, ModelUsage by provider, ConversationState channels |
+| **UniFi/Alerts** | 2 | UnifiState, AlertItem severity |
+| **CardStatus** | 3 | String-to-status mapping, colors, border color consistency |
+| **Utilities** | 5 | formatUptime (nil, 0, minutes, hours, days), formatNumber (small, large, zero) |
+| **Security** | 3 | No hardcoded API keys, local-network-only WebSocket, no external API endpoints |
+| **Total** | **27** | |
+
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License -- see [LICENSE](LICENSE) for details.
+
+Copyright (c) 2026 Jordan Koch.

@@ -10,18 +10,31 @@
 		1D03076C7282B31B5D3BA57C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA7C1A838850D615AE58AA7 /* DetailView.swift */; };
 		586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1E0FE4555130401B471D0 /* DashboardView.swift */; };
 		636073B18E14278E88672D88 /* DashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E725392E5CFD96D2DC037C9A /* DashboardService.swift */; };
+		6F21D87424D63687A9EC5A62 /* NovaTVTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5950CFB66AB3522BC572AC4 /* NovaTVTests.swift */; };
 		72332A24ED8EDC4E364B33FB /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBBE87708194FF5055929C /* HUDView.swift */; };
 		7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C627E70C65C311DB1DD7B /* DashboardState.swift */; };
 		AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */; };
 		E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		727C130BAC464268BA969C90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6C81B2A14A3A08D3D700B834 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4105C50C250EE05B5817529;
+			remoteInfo = NovaTV;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		12A1E0FE4555130401B471D0 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1AFBBE87708194FF5055929C /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		2CEDA995F61F568F5C38008E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		676A2019711ED8CE2B752A6D /* NovaTV.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NovaTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B2A33A3B4F7823B73B4C5DC /* NovaTVTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NovaTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FA7C1A838850D615AE58AA7 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		D5950CFB66AB3522BC572AC4 /* NovaTVTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTVTests.swift; sourceTree = "<group>"; };
 		DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTVApp.swift; sourceTree = "<group>"; };
 		E725392E5CFD96D2DC037C9A /* DashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardService.swift; sourceTree = "<group>"; };
 		ED4C627E70C65C311DB1DD7B /* DashboardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardState.swift; sourceTree = "<group>"; };
@@ -29,6 +42,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		400A13D6B25FA5EFCFCE791B /* NovaTVTests */ = {
+			isa = PBXGroup;
+			children = (
+				D5950CFB66AB3522BC572AC4 /* NovaTVTests.swift */,
+			);
+			path = NovaTVTests;
+			sourceTree = "<group>";
+		};
 		4B1E6C7A90F1A20FCA50C1A7 /* NovaTV */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				676A2019711ED8CE2B752A6D /* NovaTV.app */,
+				7B2A33A3B4F7823B73B4C5DC /* NovaTVTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				4B1E6C7A90F1A20FCA50C1A7 /* NovaTV */,
+				400A13D6B25FA5EFCFCE791B /* NovaTVTests */,
 				910C1F0171F15E6A0B1DA6CC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,6 +110,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3AB11AF644AF53F0ECDB47CB /* NovaTVTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB67ADD1649E6241F9BC4931 /* Build configuration list for PBXNativeTarget "NovaTVTests" */;
+			buildPhases = (
+				AD3B337DA9A3B9B110BF7A5B /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				16BEEB2C3201A251A399F627 /* PBXTargetDependency */,
+			);
+			name = NovaTVTests;
+			packageProductDependencies = (
+			);
+			productName = NovaTVTests;
+			productReference = 7B2A33A3B4F7823B73B4C5DC /* NovaTVTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E4105C50C250EE05B5817529 /* NovaTV */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD969D877441EEE8D8DBC564 /* Build configuration list for PBXNativeTarget "NovaTV" */;
@@ -113,6 +154,10 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					3AB11AF644AF53F0ECDB47CB = {
+						DevelopmentTeam = QRRCB8HB3W;
+						ProvisioningStyle = Automatic;
+					};
 					E4105C50C250EE05B5817529 = {
 						DevelopmentTeam = QRRCB8HB3W;
 						ProvisioningStyle = Automatic;
@@ -134,11 +179,20 @@
 			projectRoot = "";
 			targets = (
 				E4105C50C250EE05B5817529 /* NovaTV */,
+				3AB11AF644AF53F0ECDB47CB /* NovaTVTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD3B337DA9A3B9B110BF7A5B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F21D87424D63687A9EC5A62 /* NovaTVTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D15D7254B99F59398A8F371D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -154,6 +208,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		16BEEB2C3201A251A399F627 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4105C50C250EE05B5817529 /* NovaTV */;
+			targetProxy = 727C130BAC464268BA969C90 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		16E3F8318E203ADD9EF62A55 /* Release */ = {
@@ -185,6 +247,40 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.digitalnoise.NovaTV;
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		4E8BDCD58B35C254556B8E8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.digitalnoise.NovaTVTests;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NovaTV.app/NovaTV";
+			};
+			name = Release;
+		};
+		60A4C273B9F36A07AC7F59D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.digitalnoise.NovaTVTests;
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NovaTV.app/NovaTV";
 			};
 			name = Debug;
 		};
@@ -332,6 +428,15 @@
 			buildConfigurations = (
 				3579B44B9D3B6415901223DF /* Debug */,
 				16E3F8318E203ADD9EF62A55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FB67ADD1649E6241F9BC4931 /* Build configuration list for PBXNativeTarget "NovaTVTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				60A4C273B9F36A07AC7F59D7 /* Debug */,
+				4E8BDCD58B35C254556B8E8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

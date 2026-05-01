@@ -24,3 +24,16 @@ targets:
         INFOPLIST_FILE: NovaTV/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: net.digitalnoise.NovaTV
         ASSETCATALOG_COMPILER_APPICON_NAME: ""
+  NovaTVTests:
+    type: bundle.unit-test
+    platform: tvOS
+    sources:
+      - path: NovaTVTests
+    dependencies:
+      - target: NovaTV
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: net.digitalnoise.NovaTVTests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/NovaTV.app/NovaTV"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        GENERATE_INFOPLIST_FILE: "YES"
