@@ -69,13 +69,28 @@ final class DashboardService: ObservableObject {
 
     var baseURL: String { "http://\(dashboardHost):\(dashboardPort)" }
 
+    /// Fetches service detail with retry logic: 3 attempts with exponential backoff (1s, 2s, 4s).
     func fetchDetail(service: String) async -> [String: Any]? {
         guard let url = URL(string: "\(baseURL)/api/detail/\(service)") else { return nil }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            return try JSONSerialization.jsonObject(with: data) as? [String: Any]
-        } catch {
-            return nil
+
+        let maxAttempts = 3
+        for attempt in 1...maxAttempts {
+            do {
+                let (data, response) = try await URLSession.shared.data(from: url)
+                if let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) {
+                    return try JSONSerialization.jsonObject(with: data) as? [String: Any]
+                }
+            } catch {
+                // Log failure for diagnostics
+                print("[NovaTV] fetchDetail(\(service)) attempt \(attempt)/\(maxAttempts) failed: \(error.localizedDescription)")
+            }
+
+            // Exponential backoff: 1s, 2s, 4s
+            if attempt < maxAttempts {
+                let delay = UInt64(1_000_000_000) * UInt64(1 << (attempt - 1))
+                try? await Task.sleep(nanoseconds: delay)
+            }
         }
+        return nil
     }
 }
