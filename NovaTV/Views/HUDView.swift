@@ -136,6 +136,20 @@ struct HUDView: View {
                         ledRow("SEARXNG", isServiceUp("searxng"))
                     }
 
+                    // Agent status
+                    if let agents = dashboard.state?.agents, !agents.isEmpty {
+                        Divider().background(cyanColor.opacity(0.2))
+
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("AGENTS")
+                                .font(.system(size: 12, design: .monospaced))
+                                .foregroundColor(cyanColor.opacity(0.5))
+                            ForEach(Array(agents.sorted(by: { $0.key < $1.key })), id: \.key) { name, agent in
+                                agentLedRow(name.uppercased(), agent)
+                            }
+                        }
+                    }
+
                     Spacer()
                 }
                 .frame(width: 220)
@@ -471,6 +485,27 @@ struct HUDView: View {
             Text(name)
                 .font(.system(size: 13, design: .monospaced))
                 .foregroundColor(cyanColor.opacity(0.6))
+        }
+    }
+
+    private func agentLedRow(_ name: String, _ agent: AgentState) -> some View {
+        let isUp = agent.status == "running"
+        return HStack(spacing: 10) {
+            Circle()
+                .fill(isUp ? greenColor : (agent.status == "error" ? redColor : amberColor))
+                .frame(width: 10, height: 10)
+                .shadow(color: isUp ? greenColor : redColor, radius: 4)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(name)
+                    .font(.system(size: 13, design: .monospaced))
+                    .foregroundColor(cyanColor.opacity(0.6))
+                if let model = agent.model, model != "unknown" {
+                    Text(model.count > 20 ? String(model.suffix(20)) : model)
+                        .font(.system(size: 9, design: .monospaced))
+                        .foregroundColor(cyanColor.opacity(0.3))
+                        .lineLimit(1)
+                }
+            }
         }
     }
 }
