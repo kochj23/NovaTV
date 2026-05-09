@@ -9,6 +9,7 @@ Written by Jordan Koch.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Tests](https://img.shields.io/badge/tests-27%20cases-brightgreen)
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Privacy](https://img.shields.io/badge/privacy-100%25%20local-brightgreen)
 
 ---
 
@@ -30,12 +31,14 @@ graph TD
     subgraph Nova["Nova Infrastructure (Mac Studio)"]
         NC[NovaControl :37400<br/>Unified API] --> WS
         NC -->|polls| Ollama[Ollama :11434]
-        NC -->|polls| PG[PostgreSQL :5432<br/>1.48M memories]
+        NC -->|polls| PG[PostgreSQL :5432<br/>1,482,791 memories]
         NC -->|polls| Redis[Redis :6379]
         NC -->|polls| Sched[Scheduler :37460<br/>79 tasks]
         NC -->|polls| BB[Big Brother :37461<br/>self-healing daemon]
         NC -->|polls| GW[Gateway :18789]
         NC -->|polls| Mem[Memory Server :18790]
+        NC -->|polls| ComfyUI[ComfyUI :8188<br/>image generation]
+        NC -->|polls| SearXNG[SearXNG :8888<br/>private search]
     end
 
     style App fill:#0d1117,stroke:#00ffcc,color:#00ffcc
@@ -55,12 +58,14 @@ The TV app is a pure consumer — it receives the same JSON state as NovaControl
 - **Gateway Health** — Status, WebSocket reachability
 - **Scheduler** — 79 tasks, running count, success rate, uptime
 - **Ollama Models** — Loaded models with sizes
-- **PostgreSQL** — 1.48M memories, database size, index health
+- **PostgreSQL** — 1,482,791 memories, database size, index health
 - **Redis** — Connection status, ingest queue depth
 - **Memory Server** — Recall health, queue length
 - **Big Brother** — Self-healing daemon status, recent heal events
 - **Services** — All backend services with status dots and latency
 - **Agent Cards** — All 5 Nova sub-agents (Sentinel, Lookout, Analyst, Librarian, Coder)
+- **ComfyUI** — Image generation service status and queue depth
+- **SearXNG** — Private search engine reachability and latency
 - **Alert Banner** — Active warnings and critical alerts
 - **Auto-reconnect** — Exponential backoff on connection loss
 - **Dark theme** — Designed for living room display
@@ -107,13 +112,49 @@ All data comes from the NovaControl WebSocket push:
 | Gateway | Status, uptime, channel connections (Slack/Discord/Signal) |
 | Scheduler | 79 tasks, success rate, failures |
 | Ollama | Models loaded, sizes |
-| PostgreSQL | 1.48M rows, DB size |
+| PostgreSQL | 1,482,791 rows, DB size |
 | Redis | Keys, ingest queue depth |
 | Memory Server | Recall health, queue |
 | Big Brother | Events, services down, heal history |
 | Conversations | Active sessions, channel breakdown |
 | Services | 10+ services with latency |
+| ComfyUI | HTTP reachability, queue depth |
+| SearXNG | HTTP reachability, latency |
 | Agents | 5 agents with status/model/uptime |
+
+---
+
+## Privacy Model
+
+Nova routes 100% of traffic locally by default. The only exception is the research agent, which uses OpenRouter for web-augmented queries. No conversation data, memory content, or system telemetry ever leaves the local network during normal operation.
+
+```mermaid
+graph LR
+    subgraph Local["Local (Mac Studio)"]
+        GW[Gateway] --> Q[qwen3-next:80b]
+        GW --> CODER[qwen3-coder:30b]
+        GW --> REASON[deepseek-r1:8b]
+        GW --> VIS[qwen3-vl:4b]
+    end
+
+    subgraph Agents["5 Sub-Agents"]
+        Sentinel --> Local
+        Lookout --> Local
+        Analyst --> Local
+        Librarian --> Local
+        Coder --> Local
+    end
+
+    subgraph Cloud["Cloud (exception only)"]
+        OR[OpenRouter<br/>research agent only]
+    end
+
+    Analyst -.->|research queries only| OR
+
+    style Local fill:#0d1117,stroke:#00ffcc,color:#00ffcc
+    style Cloud fill:#0d1117,stroke:#ff4444,color:#ff4444
+    style OR fill:#1a0000,stroke:#ff4444,color:#ff4444
+```
 
 ---
 
