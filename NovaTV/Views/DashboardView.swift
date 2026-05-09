@@ -97,6 +97,18 @@ struct DashboardView: View {
             DetailLink(title: "Conversations", service: "conversations") { ConversationsCard(state: dashboard.state?.conversations) }
             DetailLink(title: "UniFi Network", service: "unifi") { UnifiCard(state: dashboard.state?.unifi) }
             DetailLink(title: "Services", service: "ollama") { ServicesCard(services: dashboard.state?.services) }
+
+            // Journal Dashboard
+            NavigationLink(destination: JournalDashboardView().environmentObject(dashboard)) {
+                JournalCard(state: dashboard.state?.journal)
+            }
+            .buttonStyle(.card)
+
+            // Big Brother Dashboard
+            NavigationLink(destination: BigBrotherDashboardView().environmentObject(dashboard)) {
+                BigBrotherCard(state: dashboard.state?.bigBrother)
+            }
+            .buttonStyle(.card)
         }
         .padding(.bottom, 20)
     }

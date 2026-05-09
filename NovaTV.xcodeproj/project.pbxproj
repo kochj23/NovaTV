@@ -14,6 +14,7 @@
 		72332A24ED8EDC4E364B33FB /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBBE87708194FF5055929C /* HUDView.swift */; };
 		7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C627E70C65C311DB1DD7B /* DashboardState.swift */; };
 		AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */; };
+		B3C91A2F7D4E85A1C60F2B38 /* JournalAndBBViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D045F831C2496E9B1E5F04 /* JournalAndBBViews.swift */; };
 		E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */; };
 /* End PBXBuildFile section */
 
@@ -70,12 +71,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		A7D045F831C2496E9B1E5F04 /* JournalAndBBViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalAndBBViews.swift; sourceTree = "<group>"; };
 		87887926C3AC001F80149EF0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				12A1E0FE4555130401B471D0 /* DashboardView.swift */,
 				8FA7C1A838850D615AE58AA7 /* DetailView.swift */,
 				1AFBBE87708194FF5055929C /* HUDView.swift */,
+				A7D045F831C2496E9B1E5F04 /* JournalAndBBViews.swift */,
 				EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */,
 			);
 			path = Views;
@@ -203,6 +206,7 @@
 				1D03076C7282B31B5D3BA57C /* DetailView.swift in Sources */,
 				72332A24ED8EDC4E364B33FB /* HUDView.swift in Sources */,
 				E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */,
+				B3C91A2F7D4E85A1C60F2B38 /* JournalAndBBViews.swift in Sources */,
 				AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,7 +323,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = QRRCB8HB3W;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -332,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -379,7 +383,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QRRCB8HB3W;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -398,7 +402,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;

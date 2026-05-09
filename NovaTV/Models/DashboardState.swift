@@ -17,6 +17,8 @@ struct DashboardState: Codable {
     let unifi: UnifiState?
     let alerts: [AlertItem]?
     let trafficFlow: [String: Double]?
+    let journal: JournalSummaryState?
+    let bigBrother: BigBrotherSummaryState?
 
     enum CodingKeys: String, CodingKey {
         case ts, system, gateway, scheduler, ollama, postgresql, redis, services, agents
@@ -25,6 +27,87 @@ struct DashboardState: Codable {
         case conversations, unifi, alerts
         case trafficFlow = "traffic_flow"
         case pollDurationMs = "poll_duration_ms"
+        case journal
+        case bigBrother = "big_brother"
+    }
+}
+
+// MARK: - Journal
+
+struct JournalSummaryState: Codable {
+    let polledAt: String?
+    let totals: JournalTotals?
+    let traffic: JournalTraffic?
+    let sectionViews: [String: Int]?
+    let staleSections: [String]?
+    let sections: [String: JournalSectionBrief]?
+    let lastDeploy: JournalDeployBrief?
+
+    enum CodingKeys: String, CodingKey {
+        case polledAt = "polled_at"
+        case totals, traffic
+        case sectionViews  = "section_views"
+        case staleSections = "stale_sections"
+        case sections
+        case lastDeploy = "last_deploy"
+    }
+}
+
+struct JournalTotals: Codable {
+    let posts: Int?
+    let postsThisWeek: Int?
+    let wordsThisWeek: Int?
+    enum CodingKeys: String, CodingKey {
+        case posts
+        case postsThisWeek  = "posts_this_week"
+        case wordsThisWeek  = "words_this_week"
+    }
+}
+
+struct JournalTraffic: Codable {
+    let totalCount: Int?
+    let totalUniques: Int?
+    enum CodingKeys: String, CodingKey {
+        case totalCount   = "total_count"
+        case totalUniques = "total_uniques"
+    }
+}
+
+struct JournalSectionBrief: Codable {
+    let ageHours: Double?
+    let latestTitle: String?
+    let postsThisWeek: Int?
+    let postCount: Int?
+    enum CodingKeys: String, CodingKey {
+        case ageHours       = "age_hours"
+        case latestTitle    = "latest_title"
+        case postsThisWeek  = "posts_this_week"
+        case postCount      = "post_count"
+    }
+}
+
+struct JournalDeployBrief: Codable {
+    let title: String?
+    let conclusion: String?
+    let createdAt: String?
+    enum CodingKeys: String, CodingKey {
+        case title, conclusion
+        case createdAt = "created_at"
+    }
+}
+
+// MARK: - Big Brother
+
+struct BigBrotherSummaryState: Codable {
+    let uptimeS: Int?
+    let eventsTotal: Int?
+    let servicesDown: [String]?
+    let pendingRestarts: [String]?
+    enum CodingKeys: String, CodingKey {
+        case uptimeS        = "uptime_s"
+        case eventsTotal    = "events_total"
+        case servicesDown   = "services_down"
+        case pendingRestarts = "pending_restarts"
     }
 }
 
