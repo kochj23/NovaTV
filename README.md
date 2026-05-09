@@ -1,6 +1,6 @@
 # NovaTV
 
-tvOS dashboard for [Nova](https://github.com/kochj23/nova) AI infrastructure. Displays real-time system health, service status, and performance metrics on Apple TV — pulling live data from the NovaControl unified API on port 37400.
+tvOS dashboard for [Nova](https://github.com/kochj23/nova) AI infrastructure. Displays real-time system health, service status, journal publishing pipeline, and Big Brother oversight on Apple TV — pulling live data from the NovaControl unified API on port 37400.
 
 Written by Jordan Koch.
 
@@ -8,7 +8,7 @@ Written by Jordan Koch.
 ![tvOS](https://img.shields.io/badge/tvOS-17.0+-black?logo=apple)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Tests](https://img.shields.io/badge/tests-27%20cases-brightgreen)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 ![Privacy](https://img.shields.io/badge/privacy-100%25%20local-brightgreen)
 
 ---
@@ -17,65 +17,131 @@ Written by Jordan Koch.
 
 ```mermaid
 graph TD
-    subgraph AppleTV["Apple TV"]
-        App[NovaTVApp] --> HUD[HUDView<br/>Radial Sci-Fi Canvas]
-        App --> Dashboard[DashboardView<br/>Grid Layout]
+    subgraph AppleTV["Apple TV (3 devices)"]
+        App[NovaTVApp] --> HUD[HUDView\nRadial Sci-Fi Canvas]
+        App --> Dashboard[DashboardView\nGrid Layout]
         Dashboard --> Cards[13 StatusCards]
         Dashboard --> Agents[5 Agent Cards]
+        Dashboard --> JCard[JournalCard → JournalDashboardView]
+        Dashboard --> BBCard[BigBrotherCard → BigBrotherDashboardView]
         Dashboard --> Detail[DetailView]
-        DS[DashboardService] -->|WebSocket| WS
+        DS[DashboardService] -->|WebSocket 2.5s| WS
     end
 
-    WS((ws://192.168.1.6:37400/ws))
+    WS((ws://192.168.1.6:37450/ws))
 
     subgraph Nova["Nova Infrastructure (Mac Studio)"]
-        NC[NovaControl :37400<br/>Unified API] --> WS
+        NCW[nova-control-web :37450] --> WS
+        NCW -->|polls| NC[NovaControl :37400\nUnified API]
+        NCW -->|reads| JS[journal_stats.json\nevery 6h via scheduler]
+        NCW -->|reads| BB[Big Brother :37461\nself-healing daemon]
         NC -->|polls| Ollama[Ollama :11434]
-        NC -->|polls| PG[PostgreSQL :5432<br/>1,482,791 memories]
+        NC -->|polls| PG[PostgreSQL :5432\n1,482,884 memories]
         NC -->|polls| Redis[Redis :6379]
-        NC -->|polls| Sched[Scheduler :37460<br/>79 tasks]
-        NC -->|polls| BB[Big Brother :37461<br/>self-healing daemon]
+        NC -->|polls| Sched[Scheduler :37460\n79 tasks]
         NC -->|polls| GW[Gateway :18789]
         NC -->|polls| Mem[Memory Server :18790]
-        NC -->|polls| ComfyUI[ComfyUI :8188<br/>image generation]
-        NC -->|polls| SearXNG[SearXNG :8888<br/>private search]
     end
 
     style App fill:#0d1117,stroke:#00ffcc,color:#00ffcc
-    style NC fill:#0d1117,stroke:#00ffcc,color:#00ffcc
-    style HUD fill:#0d1117,stroke:#5535ff,color:#aaa
+    style NCW fill:#0d1117,stroke:#00ffcc,color:#00ffcc
+    style JCard fill:#0d1117,stroke:#ffcc00,color:#ffcc00
+    style BBCard fill:#0d1117,stroke:#ff4444,color:#ff4444
 ```
 
-The TV app is a pure consumer — it receives the same JSON state as NovaControl via WebSocket push every 2.5 seconds. No separate API needed.
+The TV app is a pure consumer — it receives the same JSON state as NovaControl via WebSocket push every 2.5 seconds. No separate API polling needed.
 
 ---
 
 ## Features
 
-- **Real-time WebSocket connection** to NovaControl (port 37400)
+### Main Dashboard Grid
+- **Real-time WebSocket connection** to nova-control-web (port 37450)
 - **Radial HUD visualization** — all 13 subsystems orbit a central gateway node with animated particle flows
 - **System Resources** — CPU, RAM, disk usage per volume
-- **Gateway Health** — Status, WebSocket reachability
+- **Gateway Health** — Status, WebSocket reachability, channel connections
 - **Scheduler** — 79 tasks, running count, success rate, uptime
-- **Ollama Models** — Loaded models with sizes
-- **PostgreSQL** — 1,482,791 memories, database size, index health
-- **Redis** — Connection status, ingest queue depth
-- **Memory Server** — Recall health, queue length
-- **Big Brother** — Self-healing daemon status, recent heal events
+- **Ollama Models** — Loaded models with sizes and warmup state
+- **PostgreSQL** — 1,482,884 memories, database size, index health
+- **Redis** — Connection status, ingest queue depth, memory utilization
+- **Conversations** — Active sessions, channel breakdown
 - **Services** — All backend services with status dots and latency
+- **UniFi Network** — Device count, client count, WAN uptime
 - **Agent Cards** — All 5 Nova sub-agents (Sentinel, Lookout, Analyst, Librarian, Coder)
-- **ComfyUI** — Image generation service status and queue depth
-- **SearXNG** — Private search engine reachability and latency
-- **Alert Banner** — Active warnings and critical alerts
-- **Auto-reconnect** — Exponential backoff on connection loss
-- **Dark theme** — Designed for living room display
+- **Alert Banner** — Active warnings and critical alerts at top of screen
+
+### Journal Dashboard *(new in v1.1.0)*
+Drill-down from `JournalCard` on the main grid:
+
+- **Summary stats** — Total posts, this week, words/week, 14-day views and unique visitors
+- **Section health grid** — All 7 sections (Dreams, Essays, Opinions, After Dark, Tech Today, Research, Digests) with last-post age, staleness color coding, this week vs last week delta
+- **7-day coverage heatmap** — ✓/✗ per section per day, instantly shows any gaps
+- **Last deploy status** — Most recent GitHub Pages deploy with pass/fail
+- **Views by section** — Bar chart of GitHub Traffic API data broken down by section
+
+### Big Brother Dashboard *(new in v1.1.0)*
+Drill-down from `BigBrotherCard` on the main grid:
+
+- **Service status grid** — All monitored services (30+) with colored status indicators and restart counts
+- **Recent heal events** — Last 8 self-healing actions with severity, issue description, and fix applied
+- **Summary stats** — Uptime, total heal events, services down, pending restarts
+
+---
+
+## Data Flow
+
+```mermaid
+sequenceDiagram
+    participant TV as Apple TV
+    participant WS as WebSocket :37450
+    participant NCW as nova-control-web
+    participant BB as Big Brother :37461
+    participant JS as journal_stats.json
+
+    loop Every 2.5s
+        NCW->>BB: GET /bb/status (1s timeout)
+        NCW->>JS: Read file (fast, no network)
+        NCW->>WS: Broadcast state + journal + big_brother
+        WS->>TV: Push JSON (DashboardState)
+    end
+
+    TV->>NCW: GET /api/journal/stats (on drill-down)
+    TV->>NCW: GET /api/bb/health (on drill-down)
+```
+
+---
+
+## Dashboard Views
+
+| View | Trigger | Data Source |
+|------|---------|-------------|
+| `DashboardView` | App launch | WebSocket stream |
+| `HUDView` | Focus radial node | WebSocket stream |
+| `JournalDashboardView` | Select JournalCard | `/api/journal/stats` + WebSocket |
+| `BigBrotherDashboardView` | Select BBCard | `/api/bb/health` + WebSocket |
+| `DetailView` | Select any other card | `/api/detail/{service}` |
+
+---
+
+## Journal Data Sources
+
+| Stat | Source | Refresh |
+|------|--------|---------|
+| Post counts, coverage | Local filesystem scan | Every 6h |
+| Traffic views/uniques | GitHub Traffic API | Every 6h |
+| Top paths, referrers | GitHub Traffic API | Every 6h |
+| Deploy history | `gh run list` | Every 6h |
+| Staleness/age | Local filesystem | Every 6h |
+| Scheduler task state | `scheduler_state.json` | Every 6h |
+
+Traffic history persisted locally to survive GitHub's 14-day rolling window cliff.
 
 ---
 
 ## Requirements
 
 - Apple TV 4K (2nd generation or later) running tvOS 17.0+
-- NovaControl running on the local network at port 37400
+- nova-control-web running at `192.168.1.6:37450`
 - Xcode 16.0+ to build and deploy
 
 ---
@@ -86,41 +152,40 @@ Set the host in `DashboardService.swift`:
 
 ```swift
 private let dashboardHost = "192.168.1.6"
-private let dashboardPort = 37400
+private let dashboardPort = 37450
 ```
 
 ---
 
-## Building
+## Building & Deploying
 
 ```bash
+# Build
 cd /Volumes/Data/xcode/NovaTV
-xcodegen generate
-open NovaTV.xcodeproj
-# Select Apple TV target, Run
+xcodebuild -project NovaTV.xcodeproj -scheme NovaTV \
+  -configuration Release \
+  -destination "generic/platform=tvOS" \
+  CODE_SIGN_STYLE=Automatic DEVELOPMENT_TEAM=QRRCB8HB3W \
+  archive -archivePath ./build/NovaTV.xcarchive
+
+# Deploy to all 3 Apple TVs
+for id in 59ACE225-758B-55E9-B0B2-303632320A8C \
+          BA5C0F07-1D07-5E67-82BD-F8B8B91F5ADA \
+          915604CB-97FF-5F2E-9AE6-15AEB8852719; do
+  xcrun devicectl device process terminate --device $id \
+    --bundle-id net.digitalnoise.NovaTV 2>/dev/null || true
+  xcrun devicectl device install app --device $id ./build/NovaTV.app
+  xcrun devicectl device process launch --device $id \
+    --bundle-id net.digitalnoise.NovaTV
+done
 ```
 
----
-
-## Data Sources
-
-All data comes from the NovaControl WebSocket push:
-
-| Card | Key Metrics |
-|------|------------|
-| System | CPU %, RAM, disk free |
-| Gateway | Status, uptime, channel connections (Slack/Discord/Signal) |
-| Scheduler | 79 tasks, success rate, failures |
-| Ollama | Models loaded, sizes |
-| PostgreSQL | 1,482,791 rows, DB size |
-| Redis | Keys, ingest queue depth |
-| Memory Server | Recall health, queue |
-| Big Brother | Events, services down, heal history |
-| Conversations | Active sessions, channel breakdown |
-| Services | 10+ services with latency |
-| ComfyUI | HTTP reachability, queue depth |
-| SearXNG | HTTP reachability, latency |
-| Agents | 5 agents with status/model/uptime |
+**Deployed to:**
+| Device | ID |
+|--------|----|
+| Living Room | `59ACE225-758B-55E9-B0B2-303632320A8C` |
+| Master Bedroom | `BA5C0F07-1D07-5E67-82BD-F8B8B91F5ADA` |
+| Office | `915604CB-97FF-5F2E-9AE6-15AEB8852719` |
 
 ---
 
@@ -137,23 +202,17 @@ graph LR
         GW --> VIS[qwen3-vl:4b]
     end
 
-    subgraph Agents["5 Sub-Agents"]
-        Sentinel --> Local
-        Lookout --> Local
-        Analyst --> Local
-        Librarian --> Local
-        Coder --> Local
-    end
-
     subgraph Cloud["Cloud (exception only)"]
-        OR[OpenRouter<br/>research agent only]
+        OR[OpenRouter\nresearch agent only]
     end
 
-    Analyst -.->|research queries only| OR
+    subgraph TV["Apple TV"]
+        NOVATV[NovaTV] -->|WebSocket LAN only| Local
+    end
 
     style Local fill:#0d1117,stroke:#00ffcc,color:#00ffcc
     style Cloud fill:#0d1117,stroke:#ff4444,color:#ff4444
-    style OR fill:#1a0000,stroke:#ff4444,color:#ff4444
+    style TV fill:#0d1117,stroke:#4488ff,color:#4488ff
 ```
 
 ---
@@ -165,19 +224,33 @@ xcodebuild test -scheme NovaTV -sdk appletvsimulator \
   -destination 'platform=tvOS Simulator,name=Apple TV 4K (3rd generation)'
 ```
 
-| Category | Tests | Coverage |
-|----------|-------|----------|
-| DashboardState | 2 | Full JSON decoding, minimal state |
-| System Models | 4 | MemoryInfo, DiskInfo, SwapInfo, NetworkInfo |
-| Gateway / Scheduler | 2 | Status, success rate |
-| Ollama / Services | 2 | OllamaModel, ServiceState with latency |
-| Agents | 1 | AgentState with model/uptime |
-| Task / Usage / Conv | 3 | TaskHistory, ModelUsage, ConversationState |
-| UniFi / Alerts | 2 | UnifiState, AlertItem severity |
-| CardStatus | 3 | String-to-status mapping and colors |
-| Utilities | 5 | formatUptime, formatNumber |
-| Security | 3 | No hardcoded keys, loopback only |
-| **Total** | **27** | |
+| Category | Tests |
+|----------|-------|
+| DashboardState decoding | 2 |
+| System models | 4 |
+| Gateway / Scheduler | 2 |
+| Ollama / Services | 2 |
+| Agents | 1 |
+| Task / Usage / Conversations | 3 |
+| UniFi / Alerts | 2 |
+| CardStatus utilities | 3 |
+| Format utilities | 5 |
+| Security | 3 |
+| **Total** | **27** |
+
+---
+
+## Changelog
+
+### v1.1.0 — 2026-05-09
+- Added `JournalDashboardView` with 7-section health grid, 7-day coverage heatmap, GitHub traffic stats, deploy feed
+- Added `BigBrotherDashboardView` with full service status grid and heal event feed
+- Added `JournalCard` and `BigBrotherCard` summary tiles to main dashboard grid
+- Extended `DashboardState` with `journal` and `big_brother` keys from WebSocket feed
+- New models: `JournalSummaryState`, `BigBrotherSummaryState` and supporting types
+
+### v1.0.0 — 2026-02-26
+- Initial release with 13 status cards, HUD radial view, 5 agent cards, DetailView
 
 ---
 
