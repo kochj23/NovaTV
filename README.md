@@ -39,7 +39,7 @@ graph TD
         NC -->|polls| PG[PostgreSQL :5432\n1,482,884 memories]
         NC -->|polls| Redis[Redis :6379]
         NC -->|polls| Sched[Scheduler :37460\n79 tasks]
-        NC -->|polls| GW[Gateway :18789]
+        NC -->|polls| GW[Gateway v2 :18792\nPython asyncio]
         NC -->|polls| Mem[Memory Server :18790]
     end
 
@@ -57,7 +57,7 @@ The TV app is a pure consumer — it receives the same JSON state as NovaControl
 
 ### Main Dashboard Grid
 - **Real-time WebSocket connection** to nova-control-web (port 37450)
-- **Radial HUD visualization** — all 13 subsystems orbit a central gateway node with animated particle flows
+- **Radial HUD visualization** — all 13 subsystems orbit a central gateway node with animated particle flows (gateway = Nova Gateway v2, pure Python asyncio replacement for OpenClaw)
 - **System Resources** — CPU, RAM, disk usage per volume
 - **Gateway Health** — Status, WebSocket reachability, channel connections
 - **Scheduler** — 79 tasks, running count, success rate, uptime
@@ -241,6 +241,11 @@ xcodebuild test -scheme NovaTV -sdk appletvsimulator \
 ---
 
 ## Changelog
+
+### v1.2.0 — 2026-05-13
+- Gateway reference updated: OpenClaw (node.js, :18789) replaced by Nova Gateway v2 (Python asyncio, :18792)
+- Gateway v2 provides Slack + Discord + Signal on pure Python; bootstrap from `nova_ops.agent_docs` in PostgreSQL
+- NovaControl polling target updated to Gateway v2 health endpoint
 
 ### v1.1.0 — 2026-05-09
 - Added `JournalDashboardView` with 7-section health grid, 7-day coverage heatmap, GitHub traffic stats, deploy feed
