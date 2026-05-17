@@ -96,7 +96,7 @@ struct DashboardView: View {
             DetailLink(title: "Model Usage", service: "model_usage") { ModelUsageCard(state: dashboard.state?.modelUsage) }
             DetailLink(title: "Conversations", service: "conversations") { ConversationsCard(state: dashboard.state?.conversations) }
             DetailLink(title: "UniFi Network", service: "unifi") { UnifiCard(state: dashboard.state?.unifi) }
-            DetailLink(title: "Services", service: "ollama") { ServicesCard(services: dashboard.state?.services) }
+            DetailLink(title: "Services", service: "services") { ServicesCard(services: dashboard.state?.services) }
 
             // Journal Dashboard
             NavigationLink(destination: JournalDashboardView().environmentObject(dashboard)) {

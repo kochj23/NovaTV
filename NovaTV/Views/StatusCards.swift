@@ -156,6 +156,7 @@ struct GatewayCard: View {
             StatRow(label: "Status", value: state?.gatewayStatus ?? "?", color: state?.ok == true ? .green : .red)
             StatRow(label: "WebSocket", value: state?.wsReachable == true ? "Reachable" : "Down", color: state?.wsReachable == true ? .green : .red)
         }
+        .serviceActions(for: "gateway")
     }
 }
 
@@ -172,6 +173,7 @@ struct SchedulerCard: View {
                 StatRow(label: "Success", value: String(format: "%.1f%%", rate), color: rate >= 98 ? .green : .yellow)
             }
         }
+        .serviceActions(for: "scheduler")
     }
 }
 
@@ -195,6 +197,7 @@ struct OllamaCard: View {
                 }
             }
         }
+        .serviceActions(for: "ollama")
     }
 }
 
@@ -218,6 +221,7 @@ struct RedisCard: View {
             StatRow(label: "Keys", value: "\(state?.dbSize ?? 0)")
             StatRow(label: "Ingest Queue", value: "\(qd)", color: qd > 50 ? .red : qd > 20 ? .yellow : .green)
         }
+        .serviceActions(for: "redis")
     }
 }
 
@@ -289,6 +293,7 @@ struct ServicesCard: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    .serviceActions(for: name)
                 }
             }
         }

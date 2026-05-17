@@ -16,6 +16,11 @@
 		AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */; };
 		B3C91A2F7D4E85A1C60F2B38 /* JournalAndBBViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D045F831C2496E9B1E5F04 /* JournalAndBBViews.swift */; };
 		E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */; };
+		AA11111111111111AAAAAAAA /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA22222222222222AAAAAAAA /* TrendsView.swift */; };
+		BB11111111111111BBBBBBBB /* NotificationRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22222222222222BBBBBBBB /* NotificationRelay.swift */; };
+		CC11111111111111CCCCCCCC /* VoiceCommandParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC22222222222222CCCCCCCC /* VoiceCommandParser.swift */; };
+		DD11111111111111DDDDDDDD /* ServiceActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD22222222222222DDDDDDDD /* ServiceActionSheet.swift */; };
+		EE11111111111111EEEEEEEE /* BurnInProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE22222222222222EEEEEEEE /* BurnInProtection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +45,11 @@
 		E725392E5CFD96D2DC037C9A /* DashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardService.swift; sourceTree = "<group>"; };
 		ED4C627E70C65C311DB1DD7B /* DashboardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardState.swift; sourceTree = "<group>"; };
 		EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCards.swift; sourceTree = "<group>"; };
+		AA22222222222222AAAAAAAA /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
+		BB22222222222222BBBBBBBB /* NotificationRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRelay.swift; sourceTree = "<group>"; };
+		CC22222222222222CCCCCCCC /* VoiceCommandParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCommandParser.swift; sourceTree = "<group>"; };
+		DD22222222222222DDDDDDDD /* ServiceActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceActionSheet.swift; sourceTree = "<group>"; };
+		EE22222222222222EEEEEEEE /* BurnInProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurnInProtection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -66,7 +76,10 @@
 		5A417C3474EC0BB683AB4C47 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				EE22222222222222EEEEEEEE /* BurnInProtection.swift */,
 				E725392E5CFD96D2DC037C9A /* DashboardService.swift */,
+				BB22222222222222BBBBBBBB /* NotificationRelay.swift */,
+				CC22222222222222CCCCCCCC /* VoiceCommandParser.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -79,7 +92,9 @@
 				8FA7C1A838850D615AE58AA7 /* DetailView.swift */,
 				1AFBBE87708194FF5055929C /* HUDView.swift */,
 				A7D045F831C2496E9B1E5F04 /* JournalAndBBViews.swift */,
+				DD22222222222222DDDDDDDD /* ServiceActionSheet.swift */,
 				EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */,
+				AA22222222222222AAAAAAAA /* TrendsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -200,14 +215,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE11111111111111EEEEEEEE /* BurnInProtection.swift in Sources */,
 				636073B18E14278E88672D88 /* DashboardService.swift in Sources */,
 				7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */,
 				586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */,
 				1D03076C7282B31B5D3BA57C /* DetailView.swift in Sources */,
 				72332A24ED8EDC4E364B33FB /* HUDView.swift in Sources */,
-				E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */,
 				B3C91A2F7D4E85A1C60F2B38 /* JournalAndBBViews.swift in Sources */,
+				BB11111111111111BBBBBBBB /* NotificationRelay.swift in Sources */,
+				E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */,
+				DD11111111111111DDDDDDDD /* ServiceActionSheet.swift in Sources */,
 				AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */,
+				AA11111111111111AAAAAAAA /* TrendsView.swift in Sources */,
+				CC11111111111111CCCCCCCC /* VoiceCommandParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,7 +343,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = QRRCB8HB3W;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -336,7 +356,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 2.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -383,7 +403,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = QRRCB8HB3W;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -402,7 +422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 2.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;

@@ -33,13 +33,13 @@ private func ageColor(_ h: Double?, section: String) -> Color {
 }
 
 private func fmtK(_ n: Int?) -> String {
-    guard let n else { return "—" }
+    guard let n else { return "---" }
     if n >= 1000 { return String(format: "%.1fK", Double(n) / 1000) }
     return "\(n)"
 }
 
 private func uptimeText(_ s: Int?) -> String {
-    guard let s else { return "—" }
+    guard let s else { return "---" }
     let h = s / 3600, m = (s % 3600) / 60
     return h > 0 ? "\(h)h \(m)m" : "\(m)m"
 }
@@ -173,6 +173,7 @@ struct JournalDashboardView: View {
     @EnvironmentObject var dashboard: DashboardService
     @State private var fullStats: [String: Any]? = nil
     @State private var isLoading = true
+    @State private var loadError: String? = nil
 
     var journal: JournalSummaryState? { dashboard.state?.journal }
 
@@ -183,6 +184,8 @@ struct JournalDashboardView: View {
                 if isLoading {
                     ProgressView()
                         .padding(60)
+                } else if let errorMsg = loadError {
+                    errorBanner(errorMsg)
                 } else {
                     statsRow
                     sectionHealthGrid
@@ -222,11 +225,34 @@ struct JournalDashboardView: View {
         .padding(.vertical, 30)
     }
 
+    private func errorBanner(_ message: String) -> some View {
+        VStack(spacing: 12) {
+            Label("Failed to load journal stats", systemImage: "exclamationmark.triangle.fill")
+                .font(.system(size: 18, weight: .semibold, design: .monospaced))
+                .foregroundStyle(.red)
+            Text(message)
+                .font(.system(size: 14, design: .monospaced))
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Button("Retry") {
+                loadError = nil
+                isLoading = true
+                Task { await loadFullStats() }
+            }
+            .font(.system(size: 16, design: .monospaced))
+        }
+        .padding(40)
+        .background(Color.red.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.red.opacity(0.3), lineWidth: 1))
+        .padding(.vertical, 20)
+    }
+
     private var statsRow: some View {
         HStack(spacing: 32) {
             bigStat("TOTAL POSTS",     value: fmtK(journal?.totals?.posts))
             bigStat("THIS WEEK",       value: "\(journal?.totals?.postsThisWeek ?? 0)")
-            bigStat("WORDS / WEEK",    value: journal?.totals?.wordsThisWeek.map { String(format: "%.1fK", Double($0)/1000) } ?? "—")
+            bigStat("WORDS / WEEK",    value: journal?.totals?.wordsThisWeek.map { String(format: "%.1fK", Double($0)/1000) } ?? "---")
             bigStat("VIEWS (14d)",     value: fmtK(journal?.traffic?.totalCount))
             bigStat("UNIQUE VISITORS", value: fmtK(journal?.traffic?.totalUniques))
         }
@@ -266,7 +292,7 @@ struct JournalDashboardView: View {
             Text(ageText(age))
                 .font(.system(size: 14, design: .monospaced))
                 .foregroundStyle(color)
-            Text(brief.latestTitle ?? "—")
+            Text(brief.latestTitle ?? "---")
                 .font(.system(size: 11, design: .monospaced))
                 .foregroundStyle(.secondary)
                 .lineLimit(2)
@@ -289,8 +315,11 @@ struct JournalDashboardView: View {
                 .font(.system(size: 20, weight: .semibold, design: .monospaced))
                 .foregroundStyle(.secondary)
 
-            let days: [String] = (0..<7).map { i -> String in
-                let d = Calendar.current.date(byAdding: .day, value: -i, to: Date())!
+            // Safe date generation — no force unwraps (fix #2)
+            let days: [String] = (0..<7).compactMap { i -> String? in
+                guard let d = Calendar.current.date(byAdding: .day, value: -i, to: Date()) else {
+                    return nil
+                }
                 let f = DateFormatter(); f.dateFormat = "EEE d"
                 return f.string(from: d)
             }
@@ -342,7 +371,7 @@ struct JournalDashboardView: View {
                     .foregroundStyle(.secondary)
                 if let d = journal?.lastDeploy {
                     let ok = d.conclusion == "success"
-                    Label(d.title ?? "—", systemImage: ok ? "checkmark.circle.fill" : "xmark.circle.fill")
+                    Label(d.title ?? "---", systemImage: ok ? "checkmark.circle.fill" : "xmark.circle.fill")
                         .font(.system(size: 14, design: .monospaced))
                         .foregroundStyle(ok ? .green : .red)
                         .lineLimit(2)
@@ -403,11 +432,22 @@ struct JournalDashboardView: View {
     }
 
     private func loadFullStats() async {
-        guard let url = URL(string: "\(dashboard.baseURL)/api/journal/stats") else { return }
+        guard let url = URL(string: "\(dashboard.baseURL)/api/journal/stats") else {
+            loadError = "Invalid stats URL"
+            isLoading = false
+            return
+        }
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            fullStats = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-        } catch {}
+            let (data, response) = try await URLSession.shared.data(from: url)
+            if let http = response as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
+                loadError = "Server returned HTTP \(http.statusCode)"
+            } else {
+                fullStats = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            }
+        } catch {
+            loadError = error.localizedDescription
+            print("[NovaTV] Journal stats load failed: \(error.localizedDescription)")
+        }
         isLoading = false
     }
 }
@@ -418,6 +458,7 @@ struct BigBrotherDashboardView: View {
     @EnvironmentObject var dashboard: DashboardService
     @State private var fullHealth: [String: Any]? = nil
     @State private var isLoading = true
+    @State private var loadError: String? = nil
 
     var bb: BigBrotherSummaryState? { dashboard.state?.bigBrother }
 
@@ -427,6 +468,8 @@ struct BigBrotherDashboardView: View {
                 header
                 if isLoading {
                     ProgressView().padding(60)
+                } else if let errorMsg = loadError {
+                    errorBanner(errorMsg)
                 } else {
                     statsRow
                     servicesGrid
@@ -463,6 +506,29 @@ struct BigBrotherDashboardView: View {
         }
         .font(.system(size: 18, design: .monospaced))
         .padding(.vertical, 30)
+    }
+
+    private func errorBanner(_ message: String) -> some View {
+        VStack(spacing: 12) {
+            Label("Failed to load health data", systemImage: "exclamationmark.triangle.fill")
+                .font(.system(size: 18, weight: .semibold, design: .monospaced))
+                .foregroundStyle(.red)
+            Text(message)
+                .font(.system(size: 14, design: .monospaced))
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Button("Retry") {
+                loadError = nil
+                isLoading = true
+                Task { await loadFullHealth() }
+            }
+            .font(.system(size: 16, design: .monospaced))
+        }
+        .padding(40)
+        .background(Color.red.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.red.opacity(0.3), lineWidth: 1))
+        .padding(.vertical, 20)
     }
 
     private var statsRow: some View {
@@ -564,11 +630,22 @@ struct BigBrotherDashboardView: View {
     }
 
     private func loadFullHealth() async {
-        guard let url = URL(string: "\(dashboard.baseURL)/api/bb/health") else { return }
+        guard let url = URL(string: "\(dashboard.baseURL)/api/bb/health") else {
+            loadError = "Invalid health URL"
+            isLoading = false
+            return
+        }
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            fullHealth = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-        } catch {}
+            let (data, response) = try await URLSession.shared.data(from: url)
+            if let http = response as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
+                loadError = "Server returned HTTP \(http.statusCode)"
+            } else {
+                fullHealth = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            }
+        } catch {
+            loadError = error.localizedDescription
+            print("[NovaTV] Big Brother health load failed: \(error.localizedDescription)")
+        }
         isLoading = false
     }
 }

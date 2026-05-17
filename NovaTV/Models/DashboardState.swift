@@ -355,7 +355,7 @@ struct UnifiState: Codable {
     }
 }
 
-struct AlertItem: Codable {
+struct AlertItem: Codable, Equatable {
     let category: String
     let severity: String
     let message: String
