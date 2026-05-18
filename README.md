@@ -30,13 +30,13 @@ graph TD
 
     WS((ws://192.168.1.6:37450/ws))
 
-    subgraph Nova["Nova Infrastructure (Mac Studio)"]
+    subgraph Nova["Nova Infrastructure (Mac Studio M4 Ultra, 512GB)"]
         NCW[nova-control-web :37450] --> WS
         NCW -->|polls| NC[NovaControl :37400\nUnified API]
         NCW -->|reads| JS[journal_stats.json\nevery 6h via scheduler]
         NCW -->|reads| BB[Big Brother :37461\nself-healing daemon]
         NC -->|polls| Ollama[Ollama :11434]
-        NC -->|polls| PG[PostgreSQL :5432\n1,482,884 memories]
+        NC -->|polls| PG[PostgreSQL :5432\n1,224,900 memories]
         NC -->|polls| Redis[Redis :6379]
         NC -->|polls| Sched[Scheduler :37460\n79 tasks]
         NC -->|polls| GW[Gateway v2 :18792\nPython asyncio]
@@ -62,7 +62,7 @@ The TV app is a pure consumer — it receives the same JSON state as NovaControl
 - **Gateway Health** — Status, WebSocket reachability, channel connections
 - **Scheduler** — 79 tasks, running count, success rate, uptime
 - **Ollama Models** — Loaded models with sizes and warmup state
-- **PostgreSQL** — 1,482,884 memories, database size, index health
+- **PostgreSQL** — 1,224,900 memories across 409 domains, database size, index health
 - **Redis** — Connection status, ingest queue depth, memory utilization
 - **Conversations** — Active sessions, channel breakdown
 - **Services** — All backend services with status dots and latency
@@ -141,7 +141,7 @@ Traffic history persisted locally to survive GitHub's 14-day rolling window clif
 ## Requirements
 
 - Apple TV 4K (2nd generation or later) running tvOS 17.0+
-- nova-control-web running at `192.168.1.6:37450`
+- nova-control-web running at `192.168.1.6:37450` (Mac Studio M4 Ultra, 512GB unified memory)
 - Xcode 16.0+ to build and deploy
 
 ---
@@ -191,7 +191,7 @@ done
 
 ## Privacy Model
 
-Nova routes 100% of traffic locally by default. The only exception is the research agent, which uses OpenRouter for web-augmented queries. No conversation data, memory content, or system telemetry ever leaves the local network during normal operation.
+Nova routes 100% of traffic locally by default. The only exception is the research agent, which uses OpenRouter (`qwen/qwen3-235b-a22b-2507`) for web-augmented queries. No conversation data, memory content, or system telemetry ever leaves the local network during normal operation.
 
 ```mermaid
 graph LR
