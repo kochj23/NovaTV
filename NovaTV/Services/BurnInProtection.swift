@@ -20,6 +20,9 @@ final class BurnInProtectionManager: ObservableObject {
     /// Whether the display is in dimmed (idle) state
     @Published var isDimmed: Bool = false
 
+    /// Whether the memory screensaver should activate (idle > 10 min)
+    @Published var isScreensaverActive: Bool = false
+
     /// Opacity for the dim overlay (0 = fully visible, 0.7 = very dim)
     @Published var dimOpacity: Double = 0
 
@@ -76,10 +79,11 @@ final class BurnInProtectionManager: ObservableObject {
 
     private func checkIdle() {
         let elapsed = Date().timeIntervalSince(lastInteraction)
-        if elapsed >= idleTimeout && !isDimmed {
+        if elapsed >= idleTimeout && !isScreensaverActive {
             withAnimation(.easeIn(duration: 3.0)) {
                 isDimmed = true
                 dimOpacity = 0.6
+                isScreensaverActive = true
             }
         }
     }
@@ -87,10 +91,11 @@ final class BurnInProtectionManager: ObservableObject {
     /// Call this on any user interaction to reset idle timer
     func recordInteraction() {
         lastInteraction = Date()
-        if isDimmed {
+        if isDimmed || isScreensaverActive {
             withAnimation(.easeOut(duration: 0.5)) {
                 isDimmed = false
                 dimOpacity = 0
+                isScreensaverActive = false
             }
         }
     }

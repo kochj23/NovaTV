@@ -8,19 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		1D03076C7282B31B5D3BA57C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA7C1A838850D615AE58AA7 /* DetailView.swift */; };
+		24B8A0FE4F809CC028090304 /* MemoryScreensaverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E070B477FC60470F4F5D065D /* MemoryScreensaverView.swift */; };
 		586460E74E2F32B7442FAB76 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1E0FE4555130401B471D0 /* DashboardView.swift */; };
+		62F562B6A67BE6C5C96025DB /* ConstellationPatterns.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD279078C12D4F48209D8503 /* ConstellationPatterns.swift */; };
 		636073B18E14278E88672D88 /* DashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E725392E5CFD96D2DC037C9A /* DashboardService.swift */; };
+		6B895D65AA0D5B01B02E7C3B /* HUDAnimationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66CA10B32EBBC61F6D76177 /* HUDAnimationState.swift */; };
 		6F21D87424D63687A9EC5A62 /* NovaTVTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5950CFB66AB3522BC572AC4 /* NovaTVTests.swift */; };
 		72332A24ED8EDC4E364B33FB /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBBE87708194FF5055929C /* HUDView.swift */; };
+		79D04188CD4D7E988D47D2D7 /* MemoryScreensaverService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79A84798EEB0160053B97EE /* MemoryScreensaverService.swift */; };
 		7A62F42A0829625C8AFF355C /* DashboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C627E70C65C311DB1DD7B /* DashboardState.swift */; };
+		AA11111111111111AAAAAAAA /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA22222222222222AAAAAAAA /* TrendsView.swift */; };
 		AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */; };
 		B3C91A2F7D4E85A1C60F2B38 /* JournalAndBBViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D045F831C2496E9B1E5F04 /* JournalAndBBViews.swift */; };
-		E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */; };
-		AA11111111111111AAAAAAAA /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA22222222222222AAAAAAAA /* TrendsView.swift */; };
 		BB11111111111111BBBBBBBB /* NotificationRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22222222222222BBBBBBBB /* NotificationRelay.swift */; };
 		CC11111111111111CCCCCCCC /* VoiceCommandParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC22222222222222CCCCCCCC /* VoiceCommandParser.swift */; };
 		DD11111111111111DDDDDDDD /* ServiceActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD22222222222222DDDDDDDD /* ServiceActionSheet.swift */; };
+		E01FD6B5F4A02D5953A48A56 /* NovaTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */; };
 		EE11111111111111EEEEEEEE /* BurnInProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE22222222222222EEEEEEEE /* BurnInProtection.swift */; };
+		FBA8F7E9D90856EC539D60E2 /* HUDDrawingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD2E3268E02793FC72F7628 /* HUDDrawingExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,16 +45,22 @@
 		676A2019711ED8CE2B752A6D /* NovaTV.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NovaTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B2A33A3B4F7823B73B4C5DC /* NovaTVTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NovaTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FA7C1A838850D615AE58AA7 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		D5950CFB66AB3522BC572AC4 /* NovaTVTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTVTests.swift; sourceTree = "<group>"; };
-		DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTVApp.swift; sourceTree = "<group>"; };
-		E725392E5CFD96D2DC037C9A /* DashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardService.swift; sourceTree = "<group>"; };
-		ED4C627E70C65C311DB1DD7B /* DashboardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardState.swift; sourceTree = "<group>"; };
-		EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCards.swift; sourceTree = "<group>"; };
+		A7D045F831C2496E9B1E5F04 /* JournalAndBBViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalAndBBViews.swift; sourceTree = "<group>"; };
 		AA22222222222222AAAAAAAA /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
+		ACD2E3268E02793FC72F7628 /* HUDDrawingExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HUDDrawingExtensions.swift; sourceTree = "<group>"; };
 		BB22222222222222BBBBBBBB /* NotificationRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRelay.swift; sourceTree = "<group>"; };
 		CC22222222222222CCCCCCCC /* VoiceCommandParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCommandParser.swift; sourceTree = "<group>"; };
+		D5950CFB66AB3522BC572AC4 /* NovaTVTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTVTests.swift; sourceTree = "<group>"; };
+		DA96814044CA3C68BE1D9B76 /* NovaTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaTVApp.swift; sourceTree = "<group>"; };
 		DD22222222222222DDDDDDDD /* ServiceActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceActionSheet.swift; sourceTree = "<group>"; };
+		DD279078C12D4F48209D8503 /* ConstellationPatterns.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConstellationPatterns.swift; sourceTree = "<group>"; };
+		E070B477FC60470F4F5D065D /* MemoryScreensaverView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryScreensaverView.swift; sourceTree = "<group>"; };
+		E725392E5CFD96D2DC037C9A /* DashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardService.swift; sourceTree = "<group>"; };
+		E79A84798EEB0160053B97EE /* MemoryScreensaverService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryScreensaverService.swift; sourceTree = "<group>"; };
+		ED4C627E70C65C311DB1DD7B /* DashboardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardState.swift; sourceTree = "<group>"; };
 		EE22222222222222EEEEEEEE /* BurnInProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurnInProtection.swift; sourceTree = "<group>"; };
+		EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCards.swift; sourceTree = "<group>"; };
+		F66CA10B32EBBC61F6D76177 /* HUDAnimationState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HUDAnimationState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -80,11 +91,11 @@
 				E725392E5CFD96D2DC037C9A /* DashboardService.swift */,
 				BB22222222222222BBBBBBBB /* NotificationRelay.swift */,
 				CC22222222222222CCCCCCCC /* VoiceCommandParser.swift */,
+				E79A84798EEB0160053B97EE /* MemoryScreensaverService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		A7D045F831C2496E9B1E5F04 /* JournalAndBBViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalAndBBViews.swift; sourceTree = "<group>"; };
 		87887926C3AC001F80149EF0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +106,8 @@
 				DD22222222222222DDDDDDDD /* ServiceActionSheet.swift */,
 				EE6CBDAEDE9EDDC1F180347C /* StatusCards.swift */,
 				AA22222222222222AAAAAAAA /* TrendsView.swift */,
+				ACD2E3268E02793FC72F7628 /* HUDDrawingExtensions.swift */,
+				E070B477FC60470F4F5D065D /* MemoryScreensaverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -112,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				ED4C627E70C65C311DB1DD7B /* DashboardState.swift */,
+				F66CA10B32EBBC61F6D76177 /* HUDAnimationState.swift */,
+				DD279078C12D4F48209D8503 /* ConstellationPatterns.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -140,8 +155,6 @@
 				16BEEB2C3201A251A399F627 /* PBXTargetDependency */,
 			);
 			name = NovaTVTests;
-			packageProductDependencies = (
-			);
 			productName = NovaTVTests;
 			productReference = 7B2A33A3B4F7823B73B4C5DC /* NovaTVTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -157,8 +170,6 @@
 			dependencies = (
 			);
 			name = NovaTV;
-			packageProductDependencies = (
-			);
 			productName = NovaTV;
 			productReference = 676A2019711ED8CE2B752A6D /* NovaTV.app */;
 			productType = "com.apple.product-type.application";
@@ -228,6 +239,11 @@
 				AF32F1B9169C1C535FDECA50 /* StatusCards.swift in Sources */,
 				AA11111111111111AAAAAAAA /* TrendsView.swift in Sources */,
 				CC11111111111111CCCCCCCC /* VoiceCommandParser.swift in Sources */,
+				6B895D65AA0D5B01B02E7C3B /* HUDAnimationState.swift in Sources */,
+				62F562B6A67BE6C5C96025DB /* ConstellationPatterns.swift in Sources */,
+				FBA8F7E9D90856EC539D60E2 /* HUDDrawingExtensions.swift in Sources */,
+				24B8A0FE4F809CC028090304 /* MemoryScreensaverView.swift in Sources */,
+				79D04188CD4D7E988D47D2D7 /* MemoryScreensaverService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

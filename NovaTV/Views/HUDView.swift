@@ -8,8 +8,8 @@ struct HUDView: View {
     @EnvironmentObject var dashboard: DashboardService
     @State private var animationPhase: Double = 0
     @State private var isVisible: Bool = false
+    @State private var animState = HUDAnimationState()
 
-    // Timer only ticks when HUD is actually displayed (fix #9)
     private let timer = Timer.publish(every: 1.0/30.0, on: .main, in: .common).autoconnect()
 
     // Colors
@@ -45,13 +45,16 @@ struct HUDView: View {
             bgColor.ignoresSafeArea()
 
             Canvas { context, size in
-                let cx = size.width * 0.55  // offset right to make room for left sidebar
+                let cx = size.width * 0.55
                 let cy = size.height * 0.47
-                let unit = min(size.width, size.height) * 0.85  // slightly smaller to fit with sidebar
+                let unit = min(size.width, size.height) * 0.85
                 let gatewayR = unit * 0.28
                 let innerR = unit * 0.40
-                let outerR = unit * 0.40  // Same distance — all nodes equidistant from gateway
+                let outerR = unit * 0.40
                 let nodeR = unit * 0.04
+
+                // Aurora background (time-of-day colored bands)
+                HUDEffects.drawAurora(context: &context, size: size, phase: animState.auroraPhase)
 
                 // Background radial grid
                 drawRadialGrid(context: &context, cx: cx, cy: cy, unit: unit, gatewayR: gatewayR)
@@ -59,30 +62,75 @@ struct HUDView: View {
                 // Concentric gateway rings
                 drawGatewayRings(context: &context, cx: cx, cy: cy, gatewayR: gatewayR)
 
-                // Radar sweep (subtle animated)
+                // Heartbeat pulse on gateway
+                HUDEffects.drawHeartbeatPulse(context: &context, cx: cx, cy: cy, gatewayR: gatewayR, amplitude: animState.heartbeatAmplitude(), phase: animState.heartbeatPhase)
+
+                // Radar sweep
                 drawRadarSweep(context: &context, cx: cx, cy: cy, gatewayR: gatewayR)
 
-                // Orbit paths (dashed)
-                drawOrbitPaths(context: &context, cx: cx, cy: cy, innerR: innerR, outerR: outerR)
+                // Orbit paths (dashed, fade in constellation mode)
+                let orbitOpacity = 1.0 - animState.constellationProgress * 0.8
+                if orbitOpacity > 0.01 {
+                    drawOrbitPaths(context: &context, cx: cx, cy: cy, innerR: innerR, outerR: outerR)
+                }
+
+                // Build node positions map for ripples
+                var nodePositions: [String: CGPoint] = [:]
 
                 // Connection lines and nodes
-                for def in nodeDefs {
+                for (index, def) in nodeDefs.enumerated() {
                     let orbitR = def.orbit == .inner ? innerR : outerR
                     let rad = def.angle * .pi / 180
-                    let nx = cx + cos(rad) * orbitR
-                    let ny = cy + sin(rad) * orbitR
+                    let baseX = cx + cos(rad) * orbitR
+                    let baseY = cy + sin(rad) * orbitR
 
-                    // Connection line
-                    drawConnectionLine(context: &context, cx: cx, cy: cy, nx: nx, ny: ny)
+                    // Apply boot sequence + constellation transforms
+                    let (animX, animY, animOpacity) = animState.nodePosition(
+                        index: index, baseX: baseX, baseY: baseY,
+                        cx: cx, cy: cy, screenWidth: size.width, screenHeight: size.height
+                    )
 
-                    // Animated particles — count proportional to traffic
+                    // Apply ghost drift
+                    let (nx, ny, ghostOpacity) = animState.ghostOffset(for: def.id, nx: animX, ny: animY, cx: cx, cy: cy)
+                    let finalOpacity = animOpacity * ghostOpacity
+
+                    nodePositions[def.id] = CGPoint(x: nx, y: ny)
+
+                    // Connection line (dims with ghost)
+                    let lineOpacity = finalOpacity * (1.0 - animState.constellationProgress * 0.6)
+                    if lineOpacity > 0.01 {
+                        context.stroke(
+                            Path { p in
+                                p.move(to: CGPoint(x: cx, y: cy))
+                                p.addLine(to: CGPoint(x: nx, y: ny))
+                            },
+                            with: .color(cyanColor.opacity(0.12 * lineOpacity)),
+                            lineWidth: 1
+                        )
+                    }
+
+                    // Ghost trail afterimages
+                    if let ghost = animState.ghostNodes[def.id] {
+                        HUDEffects.drawGhostTrail(context: &context, nx: nx, ny: ny, cx: cx, cy: cy, ghost: ghost, phase: animationPhase)
+                    }
+
+                    // Particles
                     let nodeActivity = getActivity(def.id)
-                    drawParticle(context: &context, cx: cx, cy: cy, nx: nx, ny: ny, phase: animationPhase, index: Double(nodeDefs.firstIndex(where: { $0.id == def.id }) ?? 0), activity: nodeActivity)
+                    if finalOpacity > 0.5 {
+                        drawParticle(context: &context, cx: cx, cy: cy, nx: nx, ny: ny, phase: animationPhase, index: Double(index), activity: nodeActivity)
+                    }
+
+                    // Constellation twinkle
+                    let twinkle = animState.constellationProgress > 0.5
+                        ? HUDEffects.constellationTwinkle(phase: animationPhase, nodeIndex: index) : 1.0
 
                     // Node circle
                     let activity = getActivity(def.id)
-                    drawNode(context: &context, x: nx, y: ny, radius: nodeR, label: def.label, intents: def.intents, isHealthy: isServiceUp(def.id), activity: activity, icon: def.icon)
+                    drawNode(context: &context, x: nx, y: ny, radius: nodeR, label: def.label, intents: def.intents, isHealthy: isServiceUp(def.id), activity: activity, icon: def.icon, opacity: finalOpacity * twinkle)
                 }
+
+                // Message ripples (drawn on top of connection lines)
+                HUDEffects.drawRipples(context: &context, ripples: animState.activeRipples, nodePositions: nodePositions, cx: cx, cy: cy)
 
                 // Gateway center label
                 let gatewayFont = Font.system(size: unit * 0.026, weight: .bold, design: .monospaced)
@@ -91,7 +139,7 @@ struct HUDView: View {
                     at: CGPoint(x: cx, y: cy)
                 )
 
-                // Req/s below gateway
+                // Gateway status
                 let gwIsUp = (dashboard.state?.gateway?.ok ?? false) || dashboard.state?.gateway?.status == "ok" || dashboard.state?.gateway?.status == "up" || dashboard.state?.gateway?.gatewayStatus == "live"
                 let reqSec = gwIsUp ? "ONLINE" : "OFFLINE"
                 let subFont = Font.system(size: unit * 0.014, design: .monospaced)
@@ -99,10 +147,24 @@ struct HUDView: View {
                     Text(reqSec).font(subFont).foregroundColor(cyanColor.opacity(0.6)),
                     at: CGPoint(x: cx, y: cy + unit * 0.04)
                 )
+
+                // BPM indicator
+                let bpmFont = Font.system(size: unit * 0.012, design: .monospaced)
+                context.draw(
+                    Text("\(Int(animState.heartbeatBPM)) BPM").font(bpmFont).foregroundColor(cyanColor.opacity(0.3)),
+                    at: CGPoint(x: cx, y: cy + unit * 0.065)
+                )
             }
             .onReceive(timer) { _ in
                 guard isVisible else { return }
-                animationPhase += 1.0 / 30.0
+                let dt = 1.0 / 30.0
+                animationPhase += dt
+                animState.tick(
+                    deltaTime: dt,
+                    trafficFlow: dashboard.state?.trafficFlow,
+                    isServiceUp: { self.isServiceUp($0) },
+                    nodeIds: nodeDefs.map(\.id)
+                )
             }
 
             // Left sidebar - vital stats
@@ -323,8 +385,9 @@ struct HUDView: View {
         }
     }
 
-    private func drawNode(context: inout GraphicsContext, x: Double, y: Double, radius: Double, label: String, intents: String, isHealthy: Bool, activity: Double, icon: String) {
-        let borderCol = isHealthy ? cyanColor : redColor
+    private func drawNode(context: inout GraphicsContext, x: Double, y: Double, radius: Double, label: String, intents: String, isHealthy: Bool, activity: Double, icon: String, opacity: Double = 1.0) {
+        guard opacity > 0.01 else { return }
+        let borderCol = (isHealthy ? cyanColor : redColor).opacity(opacity)
 
         // Interior fill color based on state:
         // Down = red, idle (0) = green, busy (0.5) = yellow, very busy (1.0) = orange

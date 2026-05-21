@@ -6,6 +6,7 @@ struct NovaTVApp: App {
     @StateObject private var burnIn = BurnInProtectionManager()
     @StateObject private var layoutProfile = LayoutProfileManager()
     @StateObject private var voiceParser = VoiceCommandParser()
+    @State private var memoryService = MemoryScreensaverService()
 
     var body: some Scene {
         WindowGroup {
@@ -14,14 +15,15 @@ struct NovaTVApp: App {
                 .environmentObject(burnIn)
                 .environmentObject(layoutProfile)
                 .environmentObject(voiceParser)
+                .environment(memoryService)
                 .preferredColorScheme(.dark)
         }
     }
 }
 
 /// Page names shown in the indicator bar
-private let PAGE_NAMES = ["HUD", "DASHBOARD", "JOURNAL", "BIG BROTHER", "TRENDS"]
-private let PAGE_COUNT = 5
+private let PAGE_NAMES = ["HUD", "DASHBOARD", "JOURNAL", "BIG BROTHER", "TRENDS", "MEMORIES"]
+private let PAGE_COUNT = 6
 
 /// Top-level pager. Uses a ZStack + offset animation driven by left/right
 /// arrow button presses on the Siri Remote. TabView(.page) doesn't work
@@ -49,6 +51,8 @@ struct RootView: View {
                     NavigationStack { BigBrotherDashboardView() }
                         .frame(width: geo.size.width, height: geo.size.height)
                     TrendsView()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                    MemoryScreensaverView()
                         .frame(width: geo.size.width, height: geo.size.height)
                 }
                 .frame(width: geo.size.width * CGFloat(PAGE_COUNT), alignment: .leading)
@@ -96,6 +100,13 @@ struct RootView: View {
             .ignoresSafeArea()
         }
         .ignoresSafeArea()
+        .overlay {
+            if burnIn.isScreensaverActive {
+                MemoryScreensaverView()
+                    .transition(.opacity)
+                    .ignoresSafeArea()
+            }
+        }
         .burnInProtection()
         .onAppear {
             currentPage = layoutProfile.currentProfile.preferredStartPage
