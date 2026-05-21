@@ -302,9 +302,10 @@ struct HUDView: View {
     }
 
     private func drawParticle(context: inout GraphicsContext, cx: Double, cy: Double, nx: Double, ny: Double, phase: Double, index: Double, activity: Double) {
-        // Number of particles proportional to activity (min 1, max 8)
-        let particleCount = max(1, Int(1 + activity * 7))
-        let speed = 0.3 + activity * 0.5  // faster when busier
+        // Logarithmic curve so high activity doesn't flood the screen
+        let dampedActivity = activity > 0 ? min(1.0, log(1 + activity * 4) / log(5)) : 0
+        let particleCount = max(1, Int(1 + dampedActivity * 2))  // max 3
+        let speed = 0.3 + dampedActivity * 0.4
 
         for i in 0..<particleCount {
             let offset = Double(i) / Double(particleCount)
@@ -312,8 +313,8 @@ struct HUDView: View {
 
             let px = cx + (nx - cx) * t
             let py = cy + (ny - cy) * t
-            let size = 2.5 + sin(t * .pi) * 2.0 + activity * 2.0  // bigger when busier
-            let alpha = sin(t * .pi) * (0.5 + activity * 0.4)
+            let size = 2.0 + sin(t * .pi) * 1.5 + dampedActivity * 1.0
+            let alpha = sin(t * .pi) * (0.4 + dampedActivity * 0.3)
 
             context.fill(
                 Path { p in p.addArc(center: CGPoint(x: px, y: py), radius: size, startAngle: .zero, endAngle: .degrees(360), clockwise: false) },
