@@ -125,13 +125,10 @@ struct DictionaryScreensaverView: View {
             lineWidth: 0.5
         )
 
-        // Definition text (truncated to fit)
-        let defText = String(entry.definition.prefix(200))
+        // Definition text (truncated to ~120 chars to fit single Canvas draw)
+        let defText = String(entry.definition.prefix(120))
         context.draw(
-            Text(defText)
-                .font(defFont)
-                .foregroundColor(cyanColor.opacity(opacity * 0.6))
-                .lineLimit(3),
+            Text(defText).font(defFont).foregroundColor(cyanColor.opacity(opacity * 0.6)),
             at: CGPoint(x: x + maxWidth / 2, y: y + 65)
         )
 
