@@ -8,7 +8,7 @@ Written by Jordan Koch.
 ![tvOS](https://img.shields.io/badge/tvOS-17.0+-black?logo=apple)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Tests](https://img.shields.io/badge/tests-27%20cases-brightgreen)
-![Version](https://img.shields.io/badge/version-2.0.1-blue)
+![Version](https://img.shields.io/badge/version-2.1.0-blue)
 ![Privacy](https://img.shields.io/badge/privacy-100%25%20local-brightgreen)
 
 ---
@@ -23,9 +23,14 @@ graph TD
         App --> Journal[JournalDashboardView]
         App --> BB[BigBrotherDashboardView]
         App --> Trends[TrendsView\nSparkline Metrics]
+        App --> MSV[MemoryScreensaverView\nDictionary-style recall]
+        HUD --> AnimState[HUDAnimationState\nboot · heartbeat · ghost\naurora · ripples · constellation]
+        HUD --> FX[HUDDrawingExtensions\nCanvas effects]
+        MSV --> MSS[MemoryScreensaverService]
+        MSS -->|GET /api/random-memory| NCW
         DS[DashboardService] -->|WebSocket 1s| WS
         DS --> Ring[MetricsRingBuffer\n720 snapshots / 12 min]
-        BIP[BurnInProtection] -->|pixel shift 60s| App
+        BIP[BurnInProtection] -->|pixel shift 60s\nidle → screensaver| App
         NR[NotificationRelay] -->|push alerts| App
         VCP[VoiceCommandParser] -->|Siri Remote| App
     end
@@ -104,17 +109,29 @@ The TV app is a pure consumer — it receives the same JSON state as NovaControl
 
 ---
 
+### Whimsical HUD Animations *(new in v2.1.0)*
+- **Boot sequence** — nodes fly in one-by-one from off-screen with eased cubic timing
+- **Heartbeat pulse** — gateway rings pulse at BPM tied to total traffic load (40-180 BPM)
+- **Ghost trails** — downed services drift outward with fading static afterimages, snap back on recovery
+- **Aurora background** — time-of-day sinusoidal color bands (night=purple/blue, morning=pink/gold, day=cyan, evening=orange/blue)
+- **Message ripples** — expanding concentric arcs from messaging nodes (Slack/Discord/Signal) on traffic spikes
+- **Constellation mode** — after 5 min idle, nodes drift into star patterns (Orion, Cassiopeia, Big Dipper, Scorpius) with twinkling, snaps back on activity
+- **Memory screensaver** — Dictionary-style floating words from random PostgreSQL memories, also auto-activates on 10 min idle (replaces dim overlay)
+
+---
+
 ## Navigation
 
-Siri Remote directional pad swipes left/right between all 5 pages. Page indicator bar at bottom shows current position.
+Siri Remote directional pad swipes left/right between all 6 pages. Page indicator bar at bottom shows current position.
 
 | Page | View | Content |
 |------|------|---------|
-| 1 | HUDView | Radial orbital graph |
+| 1 | HUDView | Radial orbital graph with animations |
 | 2 | DashboardView | Card grid |
 | 3 | JournalDashboardView | Publishing pipeline |
 | 4 | BigBrotherDashboardView | Self-healing oversight |
 | 5 | TrendsView | Sparkline metrics |
+| 6 | MemoryScreensaverView | Random memories from 1.4M vectors |
 
 ---
 
@@ -246,6 +263,13 @@ xcodebuild test -scheme NovaTV -sdk appletvsimulator \
 ---
 
 ## Changelog
+
+### v2.1.0 — 2026-05-20
+- 7 whimsical HUD features: constellation mode, heartbeat pulse, ghost trails, aurora background, message ripples, boot sequence, memory screensaver
+- New page 6: Memory Screensaver — floating words from random PostgreSQL memories (Dictionary-style)
+- Screensaver auto-activates on 10 min idle (replaces dim overlay)
+- Server-side fix: `/api/random-memory` endpoint corrected to use proper column name
+- New files: HUDAnimationState, ConstellationPatterns, HUDDrawingExtensions, MemoryScreensaverView, MemoryScreensaverService
 
 ### v2.0.1 — 2026-05-20
 - Fixed particle visual clutter under heavy system load (bulk ingest spikes)
