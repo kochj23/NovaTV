@@ -24,6 +24,7 @@ struct NovaTVApp: App {
 /// Page names shown in the indicator bar
 private let PAGE_NAMES = ["HUD", "DASHBOARD", "JOURNAL", "BIG BROTHER", "TRENDS", "MEMORIES"]
 private let PAGE_COUNT = 6
+private let PAGE_ICONS = ["circle.hexagongrid.fill", "square.grid.2x2.fill", "book.fill", "eye.fill", "chart.xyaxis.line", "text.book.closed.fill"]
 
 /// Top-level pager. Uses a ZStack + offset animation driven by left/right
 /// arrow button presses on the Siri Remote. TabView(.page) doesn't work
@@ -35,6 +36,7 @@ struct RootView: View {
     @EnvironmentObject var voiceParser: VoiceCommandParser
     @State private var currentPage = 0
     @State private var dragOffset: CGFloat = 0
+    @State private var showingMenu = false
     @StateObject private var notificationRelay: NotificationRelay = NotificationRelay(baseURL: "http://192.168.1.6:37450")
 
     var body: some View {
@@ -52,7 +54,7 @@ struct RootView: View {
                         .frame(width: geo.size.width, height: geo.size.height)
                     TrendsView()
                         .frame(width: geo.size.width, height: geo.size.height)
-                    MemoryScreensaverView()
+                    DictionaryScreensaverView()
                         .frame(width: geo.size.width, height: geo.size.height)
                 }
                 .frame(width: geo.size.width * CGFloat(PAGE_COUNT), alignment: .leading)
@@ -90,9 +92,10 @@ struct RootView: View {
                         }
                     }
                     .onPlayPauseCommand {
-                        // Long-press play/pause = voice command trigger (Enterprise #3)
                         burnIn.recordInteraction()
-                        handleVoiceCommand()
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            showingMenu = true
+                        }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
@@ -102,9 +105,15 @@ struct RootView: View {
         .ignoresSafeArea()
         .overlay {
             if burnIn.isScreensaverActive {
-                MemoryScreensaverView()
+                DictionaryScreensaverView()
                     .transition(.opacity)
                     .ignoresSafeArea()
+            }
+        }
+        .overlay {
+            if showingMenu {
+                PageMenuOverlay(isPresented: $showingMenu, currentPage: $currentPage)
+                    .transition(.opacity)
             }
         }
         .burnInProtection()
@@ -117,24 +126,4 @@ struct RootView: View {
         }
     }
 
-    private func handleVoiceCommand() {
-        // In a full implementation, this would trigger SFSpeechRecognizer.
-        // For now, demonstrates the parsing pipeline with a simulated command.
-        // The actual Siri Remote voice button integration requires entitlements.
-        // The VoiceCommandParser is ready to process recognized text.
-        guard let state = dashboard.state else { return }
-
-        // Example: parse last known command if available
-        if let cmd = voiceParser.lastCommand {
-            let result = voiceParser.parse(command: cmd, state: state)
-            switch result {
-            case .navigate(let page):
-                withAnimation { currentPage = page }
-            case .navigateService:
-                withAnimation { currentPage = 1 } // Go to dashboard for service drill-down
-            case .speak, .unrecognized:
-                break
-            }
-        }
-    }
 }

@@ -7,8 +7,8 @@ Written by Jordan Koch.
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange?logo=swift)
 ![tvOS](https://img.shields.io/badge/tvOS-17.0+-black?logo=apple)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Tests](https://img.shields.io/badge/tests-27%20cases-brightgreen)
-![Version](https://img.shields.io/badge/version-2.1.0-blue)
+![Tests](https://img.shields.io/badge/tests-107%20cases-brightgreen)
+![Version](https://img.shields.io/badge/version-2.2.0-blue)
 ![Privacy](https://img.shields.io/badge/privacy-100%25%20local-brightgreen)
 
 ---
@@ -23,7 +23,8 @@ graph TD
         App --> Journal[JournalDashboardView]
         App --> BB[BigBrotherDashboardView]
         App --> Trends[TrendsView\nSparkline Metrics]
-        App --> MSV[MemoryScreensaverView\nDictionary-style recall]
+        App --> MSV[DictionaryScreensaverView\nmacOS-style scrolling recall]
+        App --> Menu[PageMenuOverlay\nPlay/Pause opens]
         HUD --> AnimState[HUDAnimationState\nboot · heartbeat · ghost\naurora · ripples · constellation]
         HUD --> FX[HUDDrawingExtensions\nCanvas effects]
         MSV --> MSS[MemoryScreensaverService]
@@ -116,13 +117,19 @@ The TV app is a pure consumer — it receives the same JSON state as NovaControl
 - **Aurora background** — time-of-day sinusoidal color bands (night=purple/blue, morning=pink/gold, day=cyan, evening=orange/blue)
 - **Message ripples** — expanding concentric arcs from messaging nodes (Slack/Discord/Signal) on traffic spikes
 - **Constellation mode** — after 5 min idle, nodes drift into star patterns (Orion, Cassiopeia, Big Dipper, Scorpius) with twinkling, snaps back on activity
-- **Memory screensaver** — Dictionary-style floating words from random PostgreSQL memories, also auto-activates on 10 min idle (replaces dim overlay)
+- **Memory screensaver** — macOS-style scrolling dictionary of random PostgreSQL memories, auto-activates on 10 min idle (replaces dim overlay)
+
+### Page Menu Overlay *(new in v2.2.0)*
+- **Press Play/Pause** on Siri Remote to open page selection overlay
+- Large icon tiles for all 6 sections with current page highlighted
+- Focus-driven navigation — Siri Remote directional pad selects, click confirms
+- Press Menu/Back to dismiss without navigating
 
 ---
 
 ## Navigation
 
-Siri Remote directional pad swipes left/right between all 6 pages. Page indicator bar at bottom shows current position.
+Siri Remote directional pad swipes left/right between all 6 pages. Page indicator bar at bottom shows current position. **Press Play/Pause to open the page selection menu.**
 
 | Page | View | Content |
 |------|------|---------|
@@ -131,7 +138,7 @@ Siri Remote directional pad swipes left/right between all 6 pages. Page indicato
 | 3 | JournalDashboardView | Publishing pipeline |
 | 4 | BigBrotherDashboardView | Self-healing oversight |
 | 5 | TrendsView | Sparkline metrics |
-| 6 | MemoryScreensaverView | Random memories from 1.4M vectors |
+| 6 | DictionaryScreensaverView | macOS-style scrolling memory dictionary |
 
 ---
 
