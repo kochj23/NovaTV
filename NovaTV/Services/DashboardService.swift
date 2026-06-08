@@ -12,8 +12,8 @@ final class DashboardService: ObservableObject {
     private let dashboardPort = 37450
     private var reconnectDelay: TimeInterval = 1.0
 
-    /// Circular buffer for sparkline metrics (last 720 snapshots = 12 min at 1/sec)
-    @Published var metricsHistory: MetricsRingBuffer = MetricsRingBuffer(capacity: 720)
+    /// Circular buffer for sparkline metrics (last 86,400 snapshots = 24h at 1/sec)
+    @Published var metricsHistory: MetricsRingBuffer = MetricsRingBuffer(capacity: 86400)
 
     init() {
         connect()
